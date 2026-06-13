@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="14dp"
+    app:cardCornerRadius="28dp"
+    app:cardElevation="0dp"
+    app:cardBackgroundColor="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Imagen del producto -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            app:cardCornerRadius="20dp"
+            app:cardBackgroundColor="#F4F0FB"
+            app:cardElevation="0dp">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/imgProducto"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitCenter"
+                    android:padding="20dp"
+                    android:src="@mipmap/ic_launcher" />
+
+                <!-- Bookmark -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:layout_margin="10dp"
+                    android:layout_gravity="top|start"
+                    app:cardCornerRadius="17dp"
+                    app:cardBackgroundColor="#FFFFFF"
+                    app:cardElevation="2dp">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="8dp"
+                        android:src="@android:drawable/btn_star_big_off"
+                        app:tint="#5B4FFF" />
+                </androidx.cardview.widget.CardView>
+
+                <!-- Share -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:layout_margin="10dp"
+                    android:layout_gravity="top|end"
+                    app:cardCornerRadius="17dp"
+                    app:cardBackgroundColor="#FFFFFF"
+                    app:cardElevation="2dp">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="8dp"
+                        android:src="@android:drawable/ic_menu_share"
+                        app:tint="#5B4FFF" />
+                </androidx.cardview.widget.CardView>
+
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Nombre -->
+        <TextView
+            android:id="@+id/txtNombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="Yezzy Boost 350 V2 Salt"
+            android:textColor="#1E1B24"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:gravity="center_horizontal"
+            android:lineSpacingExtra="2dp" />
+
+        <!-- Categoría + Stock -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="6dp"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/txtCategoria"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Zapatillas"
+                android:textColor="#9E9AA8"
+                android:textSize="13sp" />
+
+            <!-- Badge de stock -->
+            <TextView
+                android:id="@+id/txtStock"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="● Stock: 12"
+                android:textColor="#00C853"
+                android:textSize="13sp"
+                android:gravity="end"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Precio -->
+        <TextView
+            android:id="@+id/txtPrecio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_gravity="center_horizontal"
+            android:text="S/ 72.00  ·  REESLR"
+            android:textColor="#5B4FFF"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAnadir"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="#5B4FFF"
+            android:text="Añadir al carrito"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:drawableStart="@android:drawable/ic_input_add"
+            app:drawableTint="#FFFFFF"
+            android:drawablePadding="8dp"
+            android:gravity="center"
+            app:cornerRadius="16dp" />
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
