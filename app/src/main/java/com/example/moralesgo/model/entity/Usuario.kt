@@ -1,8 +1,10 @@
 package com.example.moralesgo.model.entity
 
-class Usuario {
-    val id: Int
-    val correo: String
-    val token: String
-    val rol: String
-}
+data class Usuario(
+    val id_usuario: Int,
+    val nombre: String,
+    val apellidos: String,
+    val correo: String,
+    val usuario: String,
+    val rolId: Int // Rol 2 para Vendedor, por ejemplo
+)

@@ -9,7 +9,6 @@
     android:background="#EDE8F5"
     tools:context=".ui.activity.MainActivity">
 
-    <!-- Header -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,7 +29,6 @@
             android:layout_toStartOf="@+id/imgAvatar"
             android:layout_marginEnd="12dp"/>
 
-        <!-- Avatar circular -->
         <androidx.cardview.widget.CardView
             android:id="@+id/imgAvatar"
             android:layout_width="46dp"
@@ -48,7 +46,6 @@
         </androidx.cardview.widget.CardView>
     </RelativeLayout>
 
-    <!-- Barra de búsqueda -->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -86,7 +83,6 @@
                 android:inputType="text"
                 android:imeOptions="actionSearch" />
 
-            <!-- Botón filtro -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/btnFiltro"
                 android:layout_width="34dp"
@@ -106,7 +102,6 @@
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
-    <!-- Chips de categoría -->
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -117,8 +112,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gap="8dp">
+            android:orientation="horizontal">
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipTodos"
@@ -135,6 +129,7 @@
                 android:id="@+id/chipZapatillas"
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
+                android:layout_marginStart="8dp"
                 android:text="Zapatillas"
                 android:textColor="#5B4FFF"
                 android:textSize="13sp"
@@ -147,6 +142,7 @@
                 android:id="@+id/chipSandalias"
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
+                android:layout_marginStart="8dp"
                 android:text="Sandalias"
                 android:textColor="#5B4FFF"
                 android:textSize="13sp"
@@ -159,6 +155,7 @@
                 android:id="@+id/chipBotas"
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
+                android:layout_marginStart="8dp"
                 android:text="Botas"
                 android:textColor="#5B4FFF"
                 android:textSize="13sp"
@@ -170,7 +167,6 @@
         </LinearLayout>
     </HorizontalScrollView>
 
-    <!-- Sección "Productos populares" -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -195,14 +191,20 @@
             android:textSize="13sp" />
     </RelativeLayout>
 
-    <!-- Lista de productos -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvProductos"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingHorizontal="8dp"
-        android:paddingBottom="16dp"
-        android:clipToPadding="false"
-        tools:listitem="@layout/item_producto" />
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvProductos"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="8dp"
+            android:paddingBottom="16dp"
+            android:clipToPadding="false"
+            tools:listitem="@layout/item_producto" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </LinearLayout>

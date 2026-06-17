@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://tools.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -15,17 +15,23 @@
         android:theme="@style/Theme.MoralesGo"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ui.activity.LoginActivity"
+            android:name=".ui.activity.ListarClientesActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.MainActivity"
+            android:name=".ui.activity.NuevoClienteActivity"
+            android:exported="false" /> <!-- 🚀 ACTUALIZADO: El Login ahora es el LAUNCHER principal al iniciar la App -->
+        <activity
+            android:name=".ui.activity.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity> <!-- La MainActivity queda a la espera de que el Login sea exitoso -->
+        <activity
+            android:name=".ui.activity.MainActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

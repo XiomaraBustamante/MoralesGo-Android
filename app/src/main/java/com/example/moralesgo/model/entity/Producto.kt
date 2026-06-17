@@ -1,10 +1,14 @@
 package com.example.moralesgo.model.entity
 
 data class Producto(
-    val id: Int,
+    val id_producto: Int,
     val nombre: String,
-    val categoria: String,
+    val descripcion: String?,
     val precio: Double,
-    val stock: Int,
-    val imagenUrl: String? = null
+    val estado: Boolean,
+    val categoria: Categoria,
+    val color: Color?,
+    val material: Material?,
+    val imagenes: List<ProductoImagen>?,
+    val tallas: List<ProductoTalla>?
 )
