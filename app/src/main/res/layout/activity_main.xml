@@ -9,48 +9,97 @@
     android:background="#EDE8F5"
     tools:context=".ui.activity.MainActivity">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
         android:paddingHorizontal="22dp"
         android:paddingTop="32dp"
-        android:paddingBottom="10dp">
+        android:paddingBottom="16dp"
+        android:background="#FFFFFF">
 
-        <TextView
-            android:id="@+id/lblTituloPrincipal"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="Todo lo que necesitas,\nEntregado Rápido"
-            android:textColor="#1E1B24"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:lineSpacingExtra="4dp"
-            android:layout_toStartOf="@+id/imgAvatar"
-            android:layout_marginEnd="12dp"/>
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/lblTituloPrincipal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="⚡ MoralesGo"
+                android:textColor="#5B4FFF"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.02" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Catálogo Oficial de Ventas"
+                android:textColor="#9E9AA8"
+                android:textSize="13sp"
+                android:textStyle="normal" />
+        </LinearLayout>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/imgAvatar"
-            android:layout_width="46dp"
-            android:layout_height="46dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            app:cardCornerRadius="23dp"
-            app:cardBackgroundColor="#C4B5E8"
-            app:cardElevation="2dp">
+            android:id="@+id/btnVerHistorialVentasCard"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="10dp"
+            app:cardCornerRadius="20dp"
+            app:cardBackgroundColor="#F4F0FB"
+            app:cardElevation="0dp"
+            android:foreground="?attr/selectableItemBackground">
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@mipmap/ic_launcher_round"
+                android:src="@android:drawable/ic_menu_agenda"
+                android:padding="10dp"
+                app:tint="#5B4FFF" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/btnCerrarSesion"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="10dp"
+            app:cardCornerRadius="20dp"
+            app:cardBackgroundColor="#F4F0FB"
+            app:cardElevation="0dp">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                android:padding="10dp"
+                app:tint="#5B4FFF" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/imgAvatar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:cardCornerRadius="20dp"
+            app:cardBackgroundColor="#5B4FFF"
+            app:cardElevation="0dp">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@android:drawable/ic_menu_myplaces"
+                android:padding="8dp"
+                app:tint="#FFFFFF"
                 android:scaleType="centerCrop"/>
         </androidx.cardview.widget.CardView>
-    </RelativeLayout>
+    </LinearLayout>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginHorizontal="22dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="14dp"
         app:cardCornerRadius="25dp"
         app:cardBackgroundColor="#FFFFFF"
@@ -73,8 +122,7 @@
                 android:id="@+id/etBuscar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="32dp"
-                android:layout_toStartOf="@+id/btnFiltro"
+                android:layout_marginHorizontal="32dp"
                 android:background="@null"
                 android:hint="Buscar calzados..."
                 android:textColorHint="#BDBDBD"
@@ -82,88 +130,23 @@
                 android:textSize="14sp"
                 android:inputType="text"
                 android:imeOptions="actionSearch" />
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/btnFiltro"
-                android:layout_width="34dp"
-                android:layout_height="34dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                app:cardCornerRadius="17dp"
-                app:cardBackgroundColor="#5B4FFF"
-                app:cardElevation="0dp">
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="8dp"
-                    android:src="@android:drawable/ic_menu_sort_by_size"
-                    app:tint="#FFFFFF" />
-            </androidx.cardview.widget.CardView>
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="22dp"
+        android:paddingStart="22dp"
+        android:paddingEnd="22dp"
         android:paddingBottom="14dp"
+        android:clipToPadding="false"
         android:scrollbars="none">
 
         <LinearLayout
+            android:id="@+id/containerChips"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipTodos"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:text="Todos"
-                android:textColor="#FFFFFF"
-                android:textSize="13sp"
-                app:chipBackgroundColor="#5B4FFF"
-                app:chipStrokeWidth="0dp"
-                app:chipCornerRadius="18dp"/>
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipZapatillas"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:layout_marginStart="8dp"
-                android:text="Zapatillas"
-                android:textColor="#5B4FFF"
-                android:textSize="13sp"
-                app:chipBackgroundColor="#FFFFFF"
-                app:chipStrokeColor="#C4B5E8"
-                app:chipStrokeWidth="1dp"
-                app:chipCornerRadius="18dp"/>
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipSandalias"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:layout_marginStart="8dp"
-                android:text="Sandalias"
-                android:textColor="#5B4FFF"
-                android:textSize="13sp"
-                app:chipBackgroundColor="#FFFFFF"
-                app:chipStrokeColor="#C4B5E8"
-                app:chipStrokeWidth="1dp"
-                app:chipCornerRadius="18dp"/>
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipBotas"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:layout_marginStart="8dp"
-                android:text="Botas"
-                android:textColor="#5B4FFF"
-                android:textSize="13sp"
-                app:chipBackgroundColor="#FFFFFF"
-                app:chipStrokeColor="#C4B5E8"
-                app:chipStrokeWidth="1dp"
-                app:chipCornerRadius="18dp"/>
-
         </LinearLayout>
     </HorizontalScrollView>
 
@@ -176,35 +159,81 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Productos Populares"
+            android:text="Catálogo de Productos"
             android:textColor="#1E1B24"
             android:textSize="17sp"
             android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:text="Ver todos"
-            android:textColor="#5B4FFF"
-            android:textSize="13sp" />
     </RelativeLayout>
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeRefresh"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvProductos"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingHorizontal="8dp"
-            android:paddingBottom="16dp"
-            android:clipToPadding="false"
-            tools:listitem="@layout/item_producto" />
+            android:layout_height="match_parent">
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvProductos"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="8dp"
+                android:paddingBottom="16dp"
+                android:clipToPadding="false"
+                tools:listitem="@layout/item_producto" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
+        <LinearLayout
+            android:id="@+id/lytEmptyState"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginHorizontal="32dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <ImageView
+                android:id="@+id/imgEmptyIcon"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@android:drawable/ic_menu_search"
+                app:tint="#A5A1B2" />
+
+            <TextView
+                android:id="@+id/tvEmptyTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Sin Coincidencias"
+                android:textColor="#261C53"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvEmptyMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:gravity="center"
+                android:text="No se encontraron resultados para tu búsqueda."
+                android:textColor="#8C8896"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnVerCarrito"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="22dp"
+            android:src="@drawable/shop_car"
+            android:backgroundTint="#5B4FFF"
+            app:tint="#FFFFFF"
+            android:contentDescription="Ver carrito local"
+            app:elevation="6dp"/>
+    </RelativeLayout>
 </LinearLayout>

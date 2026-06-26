@@ -1,9 +1,14 @@
 package com.example.moralesgo.ui.activity
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
-import android.widget.Toast
+import android.view.View
+import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.android.volley.Request
@@ -13,94 +18,197 @@ import com.example.moralesgo.databinding.ActivityMainBinding
 import com.example.moralesgo.model.entity.Producto
 import com.example.moralesgo.ui.adapter.ProductoAdapter
 import com.google.android.material.chip.Chip
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
 class MainActivity : AppCompatActivity() {
 
-    // 🚀 Implementación de ViewBinding siguiendo la metodología del profesor
     private lateinit var binding: ActivityMainBinding
     private lateinit var productoAdapter: ProductoAdapter
 
-    // Listas en memoria para manejar los filtros del catálogo de forma veloz
     private var listaCompletaProductos = mutableListOf<Producto>()
+    private var listaFiltradaBusqueda = mutableListOf<Producto>()
 
-    // Ruta base de conexión (Modificar por tu dominio de Railway al pasar a producción)
-    private val URL_API = "http://10.0.2.2:8068/api/productos/listar"
+    // Referencia al Chip de "Todos" dinámico
+    private var chipTodosDinamico: Chip? = null
+
+    // Rutas base de conexión a la API
+    private val URL_API_PRODUCTOS = "http://10.0.2.2:8068/api/productos/listar"
+    private val URL_API_CATEGORIAS = "http://10.0.2.2:8068/api/categorias/listar"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Inicialización del ViewBinding [cite: 5, 48]
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // 1. Configurar el RecyclerView en cuadrícula de 2 columnas usando Binding
         binding.rvProductos.layoutManager = GridLayoutManager(this, 2)
 
-        // Inicializamos el adaptador vacío por primera vez para evitar crash de inicialización [cite: 51]
         productoAdapter = ProductoAdapter(mutableListOf())
-        binding.rvProductos.adapter = productoAdapter // [cite: 53]
+        binding.rvProductos.adapter = productoAdapter
 
-        // 2. Configurar el SwipeRefreshLayout con el color morado institucional
         binding.swipeRefresh.setColorSchemeColors(Color.parseColor("#5B4FFF"))
 
-        // Escuchador del gesto de deslizar hacia abajo para refrescar desde Railway
-        binding.swipeRefresh.setOnRefreshListener {
-            Log.d("MORALESGO", "Refrescando catálogo desde la nube...")
-            cargarProductosDesdeApi()
-            binding.imgAvatar.setOnClickListener {
-                val intent = android.content.Intent(this, NuevoClienteActivity::class.java)
-                startActivity(intent)
-            }
+        binding.swipeRefresh.post {
+            binding.swipeRefresh.isRefreshing = true
         }
 
-        // 3. Configurar los eventos de los Chips de filtrado visual
-        configurarFiltrosPorCategoria()
+        binding.swipeRefresh.setOnRefreshListener {
+            Log.d("MORALESGO", "Refrescando catálogo y categorías desde la nube...")
+            binding.etBuscar.setText("")
+            cargarDatosDesdeApi()
+        }
 
-        // 4. Cargar el catálogo por primera vez al abrir la pantalla
+        binding.etBuscar.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                filtrarCalzadosPorNombre(s.toString())
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
+
+        binding.btnCerrarSesion.setOnClickListener {
+            MaterialAlertDialogBuilder(this)
+                .setTitle("Cerrar Sesión")
+                .setMessage("¿Estás seguro de que deseas salir por completo del sistema MoralesGo?")
+                .setPositiveButton("Salir") { _, _ ->
+
+                    finishAffinity()
+                }
+                .setNegativeButton("Cancelar", null)
+                .show()
+        }
+
+
+        binding.btnVerHistorialVentasCard.setOnClickListener {
+            Log.d("MORALESGO", "Abriendo el historial de ventas centralizado...")
+            val intent = Intent(this, HistorialVentasActivity::class.java)
+            startActivity(intent)
+        }
+
+
+        binding.imgAvatar.setOnClickListener {
+            val intent = Intent(this, ListarClientesActivity::class.java)
+            startActivity(intent)
+        }
+
+
+        binding.btnVerCarrito.setOnClickListener {
+            Log.d("MORALESGO", "Abriendo el carrito de compras...")
+            val intent = Intent(this, CarritoActivity::class.java)
+            startActivity(intent)
+        }
+
+        cargarDatosDesdeApi()
+    }
+
+
+    private fun cargarDatosDesdeApi() {
+        cargarCategoriasDinamicas()
         cargarProductosDesdeApi()
     }
 
-    private fun cargarProductosDesdeApi() {
-        Log.d("MORALESGO", "Iniciando petición HTTP GET a: $URL_API")
 
-        val jsonArrayRequest = object : JsonArrayRequest(
-            Request.Method.GET, URL_API, null,
+    private fun cargarCategoriasDinamicas() {
+        val jsonArrayRequest = JsonArrayRequest(
+            Request.Method.GET, URL_API_CATEGORIAS, null,
             { response ->
-                // 🔥 APAGAR RUEDITA: La respuesta llegó con éxito
-                binding.swipeRefresh.isRefreshing = false
-
-                Log.d("MORALESGO", "✅ Respuesta recibida: ${response.length()} items")
                 try {
-                    val gson = Gson()
-                    val tipoLista = object : TypeToken<List<Producto>>() {}.type
 
-                    // Parseo del JSON limpio anti-bucle del backend
-                    val productosDescargados: List<Producto> = gson.fromJson(response.toString(), tipoLista)
+                    binding.containerChips.removeAllViews()
 
-                    // Actualizamos nuestras listas en memoria
-                    listaCompletaProductos = productosDescargados.toMutableList()
 
-                    // Notificamos al adaptador para pintar los calzados de inmediato
-                    productoAdapter.actualizarLista(listaCompletaProductos)
+                    chipTodosDinamico = Chip(this).apply {
+                        text = "Todos"
+                        id = ViewGroup.generateViewId()
+                        setOnClickListener {
+                            binding.etBuscar.setText("")
+                            marcarChipActivo(this)
+                            productoAdapter.actualizarLista(listaCompletaProductos)
+                        }
+                    }
+                    binding.containerChips.addView(chipTodosDinamico)
+                    chipTodosDinamico?.let { marcarChipActivo(it) }
 
-                    // Resetear los chips al estado predeterminado ("Todos")
-                    marcarChipActivo(binding.chipTodos)
 
-                    Toast.makeText(this, "Catálogo actualizado", Toast.LENGTH_SHORT).show()
+                    for (i in 0 until response.length()) {
+                        val obj = response.getJSONObject(i)
+                        val nombreCat = obj.getString("nombre")
+
+                        val nuevoChip = Chip(this).apply {
+                            text = nombreCat
+                            id = ViewGroup.generateViewId()
+                            setOnClickListener {
+                                binding.etBuscar.setText("")
+                                marcarChipActivo(this)
+                                filtrarCatalogoPorNombreCategoria(nombreCat)
+                            }
+                        }
+
+
+                        val params = LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.WRAP_CONTENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT
+                        ).apply {
+                            setMargins(16, 0, 0, 0)
+                        }
+                        nuevoChip.layoutParams = params
+
+                        binding.containerChips.addView(nuevoChip)
+                    }
 
                 } catch (e: Exception) {
-                    Log.e("MORALESGO", "❌ Error GSON al parsear: ${e.message}")
-                    Toast.makeText(this, "Error de procesamiento de datos", Toast.LENGTH_SHORT).show()
+                    Log.e("MORALESGO", "Error procesando categorías dinámicas: ${e.message}")
                 }
             },
             { error ->
-                // 🔥 APAGAR RUEDITA: Detener animación en caso de error de conexión
-                binding.swipeRefresh.isRefreshing = false
+                Log.e("MORALESGO", "Error de red al traer categorías: ${error.message}")
+            }
+        )
+        VolleySingleton.getInstance(this).addToRequestQueue(jsonArrayRequest)
+    }
 
-                Log.e("MORALESGO", "❌ Error de Red Volley: ${error.message}")
-                Toast.makeText(this, "No se pudo conectar con el servidor", Toast.LENGTH_LONG).show()
+    private fun cargarProductosDesdeApi() {
+        Log.d("MORALESGO", "Iniciando petición HTTP GET a: $URL_API_PRODUCTOS")
+
+        val jsonArrayRequest = object : JsonArrayRequest(
+            Request.Method.GET, URL_API_PRODUCTOS, null,
+            { response ->
+                binding.swipeRefresh.isRefreshing = false
+                Log.d("MORALESGO", "Respuesta recibida: ${response.length()} items")
+                try {
+                    val gson = Gson()
+                    val tipoLista = object : TypeToken<List<Producto>>() {}.type
+                    val productosDescargados: List<Producto> = gson.fromJson(response.toString(), tipoLista)
+
+                    listaCompletaProductos = productosDescargados.toMutableList()
+
+                    listaFiltradaBusqueda.clear()
+                    listaFiltradaBusqueda.addAll(listaCompletaProductos)
+
+                    productoAdapter.actualizarLista(listaFiltradaBusqueda)
+                    chipTodosDinamico?.let { marcarChipActivo(it) }
+
+                    Snackbar.make(
+                        binding.root,
+                        "📦Sincronizado: Catálogo actualizado en tiempo real",
+                        Snackbar.LENGTH_SHORT
+                    ).setBackgroundTint(Color.parseColor("#10B981"))
+                        .setTextColor(Color.WHITE)
+                        .show()
+
+                } catch (e: Exception) {
+                    Log.e("MORALESGO", "Error GSON al parsear: ${e.message}")
+                    Snackbar.make(binding.root, "Error al procesar datos del catálogo", Snackbar.LENGTH_SHORT).show()
+                }
+            },
+            { error ->
+                binding.swipeRefresh.isRefreshing = false
+                Log.e("MORALESGO", "Error de Red Volley: ${error.message}")
+                Snackbar.make(binding.root, "No se pudo conectar con el servidor cloud", Snackbar.LENGTH_LONG).show()
             }
         ) {
             override fun getRetryPolicy() = com.android.volley.DefaultRetryPolicy(
@@ -110,59 +218,66 @@ class MainActivity : AppCompatActivity() {
         VolleySingleton.getInstance(this).addToRequestQueue(jsonArrayRequest)
     }
 
-    private fun configurarFiltrosPorCategoria() {
-        // Evento para el Chip "Todos"
-        binding.chipTodos.setOnClickListener {
-            marcarChipActivo(binding.chipTodos)
-            productoAdapter.actualizarLista(listaCompletaProductos)
+    private fun filtrarCalzadosPorNombre(texto: String) {
+        listaFiltradaBusqueda.clear()
+        if (texto.isEmpty()) {
+            listaFiltradaBusqueda.addAll(listaCompletaProductos)
+        } else {
+            val query = texto.lowercase().trim()
+            for (item in listaCompletaProductos) {
+                if (item.nombre.lowercase().contains(query)) {
+                    listaFiltradaBusqueda.add(item)
+                }
+            }
         }
 
-        // Evento para el Chip "Zapatillas"
-        binding.chipZapatillas.setOnClickListener {
-            marcarChipActivo(binding.chipZapatillas)
-            filtrarCatalogoPorNombreCategoria("Zapatillas")
-        }
+        productoAdapter.actualizarLista(listaFiltradaBusqueda)
 
-        // Evento para el Chip "Sandalias"
-        binding.chipSandalias.setOnClickListener {
-            marcarChipActivo(binding.chipSandalias)
-            filtrarCatalogoPorNombreCategoria("Sandalias")
-        }
 
-        // Evento para el Chip "Botas"
-        binding.chipBotas.setOnClickListener {
-            marcarChipActivo(binding.chipBotas)
-            filtrarCatalogoPorNombreCategoria("Botas")
+        if (listaFiltradaBusqueda.isEmpty()) {
+            binding.swipeRefresh.visibility = View.GONE
+            binding.lytEmptyState.visibility = View.VISIBLE
+            binding.tvEmptyMessage.text = "No se encontraron resultados para tu búsqueda por \"$texto\""
+        } else {
+            binding.swipeRefresh.visibility = View.VISIBLE
+            binding.lytEmptyState.visibility = View.GONE
         }
     }
 
     private fun filtrarCatalogoPorNombreCategoria(nombreCategoria: String) {
-        // Filtramos la lista completa en milisegundos usando predicados de Kotlin
         val listaFiltrada = listaCompletaProductos.filter {
             it.categoria.nombre.equals(nombreCategoria, ignoreCase = true)
         }
-
-        // Enviamos la sublista filtrada al adaptador
         productoAdapter.actualizarLista(listaFiltrada)
 
+
         if (listaFiltrada.isEmpty()) {
-            Toast.makeText(this, "No hay calzados en esta categoría", Toast.LENGTH_SHORT).show()
+            binding.swipeRefresh.visibility = View.GONE
+            binding.lytEmptyState.visibility = View.VISIBLE
+            binding.tvEmptyMessage.text = "Actualmente no contamos con modelos disponibles en la categoría \"$nombreCategoria\""
+        } else {
+            binding.swipeRefresh.visibility = View.VISIBLE
+            binding.lytEmptyState.visibility = View.GONE
         }
     }
 
     private fun marcarChipActivo(chipSeleccionado: Chip) {
-        // Reseteamos los estilos visuales de todos los chips para que combinen con tu paleta #5B4FFF
-        val chips = listOf(binding.chipTodos, binding.chipZapatillas, binding.chipSandalias, binding.chipBotas)
-
-        chips.forEach { chip ->
-            if (chip == chipSeleccionado) {
-                chip.setChipBackgroundColorResource(android.R.color.transparent)
-                chip.chipBackgroundColor = android.content.res.ColorStateList.valueOf(Color.parseColor("#5B4FFF"))
-                chip.setTextColor(Color.WHITE)
-            } else {
-                chip.setChipBackgroundColorResource(android.R.color.transparent)
-                chip.chipBackgroundColor = android.content.res.ColorStateList.valueOf(Color.WHITE)
-                chip.setTextColor(Color.parseColor("#5B4FFF"))
+        val count = binding.containerChips.childCount
+        for (i in 0 until count) {
+            val child = binding.containerChips.getChildAt(i)
+            if (child is Chip) {
+                if (child == chipSeleccionado) {
+                    child.setChipBackgroundColorResource(android.R.color.transparent)
+                    child.chipBackgroundColor = android.content.res.ColorStateList.valueOf(Color.parseColor("#5B4FFF"))
+                    child.setTextColor(Color.WHITE)
+                    child.chipStrokeWidth = 0f
+                } else {
+                    child.setChipBackgroundColorResource(android.R.color.transparent)
+                    child.chipBackgroundColor = android.content.res.ColorStateList.valueOf(Color.WHITE)
+                    child.setTextColor(Color.parseColor("#5B4FFF"))
+                    child.chipStrokeColor = android.content.res.ColorStateList.valueOf(Color.parseColor("#C4B5E8"))
+                    child.chipStrokeWidth = 1f
+                }
             }
         }
     }

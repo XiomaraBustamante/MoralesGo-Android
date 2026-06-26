@@ -15,7 +15,6 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Imagen del producto -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="180dp"
@@ -35,44 +34,9 @@
                     android:padding="20dp"
                     android:src="@mipmap/ic_launcher" />
 
-                <!-- Bookmark -->
-                <androidx.cardview.widget.CardView
-                    android:layout_width="34dp"
-                    android:layout_height="34dp"
-                    android:layout_margin="10dp"
-                    android:layout_gravity="top|start"
-                    app:cardCornerRadius="17dp"
-                    app:cardBackgroundColor="#FFFFFF"
-                    app:cardElevation="2dp">
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:padding="8dp"
-                        android:src="@android:drawable/btn_star_big_off"
-                        app:tint="#5B4FFF" />
-                </androidx.cardview.widget.CardView>
-
-                <!-- Share -->
-                <androidx.cardview.widget.CardView
-                    android:layout_width="34dp"
-                    android:layout_height="34dp"
-                    android:layout_margin="10dp"
-                    android:layout_gravity="top|end"
-                    app:cardCornerRadius="17dp"
-                    app:cardBackgroundColor="#FFFFFF"
-                    app:cardElevation="2dp">
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:padding="8dp"
-                        android:src="@android:drawable/ic_menu_share"
-                        app:tint="#5B4FFF" />
-                </androidx.cardview.widget.CardView>
-
             </FrameLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Nombre -->
         <TextView
             android:id="@+id/txtNombre"
             android:layout_width="match_parent"
@@ -85,7 +49,6 @@
             android:gravity="center_horizontal"
             android:lineSpacingExtra="2dp" />
 
-        <!-- Categoría + Stock -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -102,7 +65,6 @@
                 android:textColor="#9E9AA8"
                 android:textSize="13sp" />
 
-            <!-- Badge de stock -->
             <TextView
                 android:id="@+id/txtStock"
                 android:layout_width="0dp"
@@ -115,7 +77,6 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <!-- Precio -->
         <TextView
             android:id="@+id/txtPrecio"
             android:layout_width="wrap_content"

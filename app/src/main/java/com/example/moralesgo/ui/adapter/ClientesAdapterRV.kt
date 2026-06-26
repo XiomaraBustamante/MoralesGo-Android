@@ -7,7 +7,10 @@ import com.example.moralesgo.databinding.FilaClienteBinding
 import com.example.moralesgo.model.entity.Clientes
 
 class ClientesAdapterRV(
-    private var listaClientes: MutableList<Clientes>
+    private var listaClientes: MutableList<Clientes>,
+    private val onClienteClick: (Clientes) -> Unit,
+    private val onEditarClick: (Clientes) -> Unit,
+    private val onEliminarClick: (Clientes) -> Unit
 ) : RecyclerView.Adapter<ClientesAdapterRV.ViewHolder>() {
 
     inner class ViewHolder(val binding: FilaClienteBinding) : RecyclerView.ViewHolder(binding.root)
@@ -25,9 +28,32 @@ class ClientesAdapterRV(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val cliente = listaClientes[position]
-        holder.binding.tvnomcli.text = cliente.nomcli
-        holder.binding.tvcredito.text = "Crédito: S/ ${String.format("%.2f", cliente.credito)}"
-        holder.binding.tvdatos.text = "Código: ${cliente.id}\nFecha: ${cliente.fechareg}"
+
+
+        if (cliente.tipoCliente == 1) {
+            holder.binding.tvnomcli.text = "${cliente.nombre} ${cliente.apellido}"
+            holder.binding.tvcredito.text = "DNI: ${cliente.dni} | Tel: ${cliente.telefono}"
+        } else {
+            holder.binding.tvnomcli.text = cliente.razonSocial
+            holder.binding.tvcredito.text = "RUC: ${cliente.ruc} | Tel: ${cliente.telefono}"
+        }
+
+        holder.binding.tvdatos.text = "Dirección: ${cliente.direccion}\nFecha: ${cliente.fechareg}"
+
+
+        holder.binding.root.setOnClickListener {
+            onClienteClick(cliente)
+        }
+
+
+        holder.binding.btnEditarCliente.setOnClickListener {
+            onEditarClick(cliente)
+        }
+
+
+        holder.binding.btnEliminarCliente.setOnClickListener {
+            onEliminarClick(cliente)
+        }
     }
 
     fun actualizarLista(nuevaLista: MutableList<Clientes>) {

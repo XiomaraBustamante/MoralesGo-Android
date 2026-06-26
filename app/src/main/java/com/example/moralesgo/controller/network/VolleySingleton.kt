@@ -25,5 +25,5 @@ class VolleySingleton private constructor(context: Context) {
     }
 }
 
-// Anotación auxiliar para legibilidad
+
 annotation class VolleyMandatory

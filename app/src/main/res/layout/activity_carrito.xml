@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#EDE8F5"
+    tools:context=".ui.activity.CarritoActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="22dp"
+        android:paddingTop="32dp"
+        android:paddingBottom="16dp"
+        android:background="#FFFFFF">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/btnAtrasCarritoCard"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="16dp"
+            app:cardCornerRadius="20dp"
+            app:cardBackgroundColor="#F4F0FB"
+            app:cardElevation="0dp"
+            android:foreground="?attr/selectableItemBackground">
+            <ImageView
+                android:id="@+id/btnAtrasCarrito"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@android:drawable/ic_menu_revert"
+                android:padding="10dp"
+                app:tint="#5B4FFF" />
+        </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Resumen de Caja"
+                android:textColor="#5B4FFF"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.01" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Asignación de cliente y comprobante"
+                android:textColor="#9E9AA8"
+                android:textSize="13sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewCarrito"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingHorizontal="14dp"
+        android:paddingVertical="8dp"
+        android:clipToPadding="false"
+        tools:listitem="@layout/item_carrito" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="24dp"
+        app:cardCornerRadius="24dp"
+        android:layout_marginBottom="-12dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="24dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="32dp"
+            android:background="#FFFFFF">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="#F4F0FB"
+                android:layout_marginBottom="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="12dp">
+
+                    <ImageView
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
+                        android:src="@android:drawable/ic_menu_myplaces"
+                        app:tint="#5B4FFF" />
+
+                    <TextView
+                        android:id="@+id/tvClienteSeleccionado"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="12dp"
+                        android:text="⚠️ Ningún cliente asociado a esta venta"
+                        android:textColor="#FF9800"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/btnSeleccionarCliente"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="VINCULAR"
+                        android:textColor="#5B4FFF"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_marginBottom="20dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginEnd="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Comprobante:"
+                        android:textColor="#9E9AA8"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="4dp"/>
+
+                    <Spinner
+                        android:id="@+id/spnComprobante"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:background="@android:drawable/btn_dropdown"
+                        android:spinnerMode="dropdown"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Método de Pago:"
+                        android:textColor="#9E9AA8"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="4dp"/>
+
+                    <Spinner
+                        android:id="@+id/spnMetodoPago"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:background="@android:drawable/btn_dropdown"
+                        android:spinnerMode="dropdown"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="20dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Subtotal"
+                        android:textColor="#9E9AA8"
+                        android:textSize="14sp" />
+                    <TextView
+                        android:id="@+id/tvSubtotalVenta"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:text="S/ 0.00"
+                        android:textColor="#1E1B24"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Impuesto (IGV 18%)"
+                        android:textColor="#9E9AA8"
+                        android:textSize="14sp" />
+                    <TextView
+                        android:id="@+id/tvIgvVenta"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:text="S/ 0.00"
+                        android:textColor="#1E1B24"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#EDE8F5"
+                    android:layout_marginBottom="12dp"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Total General:"
+                        android:textColor="#1E1B24"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:layout_centerVertical="true"/>
+                    <TextView
+                        android:id="@+id/tvTotalVenta"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:text="S/ 0.00"
+                        android:textColor="#5B4FFF"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:layout_centerVertical="true"/>
+                </RelativeLayout>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnProcesarCompra"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:text="CONFIRMAR Y FACTURAR"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:backgroundTint="#5B4FFF"
+                android:textColor="#FFFFFF"
+                app:cornerRadius="16dp"
+                app:elevation="4dp"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>

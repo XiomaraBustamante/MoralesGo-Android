@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="12dp"
+    android:layout_marginVertical="6dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="3dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/imgIconoVenta"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@android:drawable/ic_menu_agenda"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            app:tint="#5B4FFF" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_toEndOf="@id/imgIconoVenta"
+            android:layout_marginStart="16dp"
+            android:layout_toStartOf="@+id/tvMontoVenta">
+
+            <TextView
+                android:id="@+id/tvVentaCliente"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cliente: Juan Pérez"
+                android:textColor="#1E1B24"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvVentaFecha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="20/06/2026 - 14:30"
+                android:textColor="#757575"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tvVentaId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Boleta N° 000123"
+                android:textColor="#5B4FFF"
+                android:textSize="12sp"
+                android:textStyle="italic" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvMontoVenta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:text="S/ 189.90"
+            android:textColor="#2E7D32"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>
+

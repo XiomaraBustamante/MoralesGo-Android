@@ -20,12 +20,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <!-- 👟 ACTUALIZADO: Cambiado a icono temático de calzado/direcciones -->
+
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="22dp"
-            android:src="@android:drawable/ic_menu_directions"
+            android:src="@android:drawable/ic_lock_lock"
             app:tint="#FFFFFF"/>
     </androidx.cardview.widget.CardView>
 

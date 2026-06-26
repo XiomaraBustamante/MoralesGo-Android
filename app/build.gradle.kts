@@ -37,7 +37,7 @@ android {
         jvmTarget = "11"
     }
 
-    viewBinding.enable = true // digitar y sincronizar
+    viewBinding.enable = true
 }
 
 dependencies {
@@ -46,7 +46,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
-    // digitar y sincronizar
+
     val roomversion = "2.7.2"
     implementation("androidx.room:room-runtime:$roomversion")
     annotationProcessor("androidx.room:room-compiler:$roomversion")

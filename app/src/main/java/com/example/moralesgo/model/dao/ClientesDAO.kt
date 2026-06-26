@@ -7,11 +7,12 @@ import androidx.room.Query
 import androidx.room.Update
 import com.example.moralesgo.model.entity.Clientes
 
-@Dao // Protocolo de persistencia nativa de Room
+@Dao
 interface ClientesDAO {
 
     @Insert
-    suspend fun AgregarCliente(obj: Clientes) // Las corrutinas evitan bloquear la pantalla
+    suspend fun AgregarCliente(obj: Clientes)
+
 
     @Update
     suspend fun ActualizarCliente(obj: Clientes)
@@ -22,6 +23,7 @@ interface ClientesDAO {
     @Query("SELECT * FROM Clientes")
     suspend fun ListarClientes(): List<Clientes>
 
-    @Query("SELECT * FROM Clientes WHERE id = :id LIMIT 1")
-    suspend fun ClientePorId(id: Int): Clientes // Indispensable para la pantalla de edición [cite: 97]
+
+    @Query("SELECT * FROM Clientes WHERE idCliente = :id LIMIT 1")
+    suspend fun ObtenerClientePorId(id: Int): Clientes?
 }

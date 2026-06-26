@@ -15,11 +15,20 @@
         android:theme="@style/Theme.MoralesGo"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.activity.HistorialVentasActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.CarritoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.DetalleProductoActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activity.ListarClientesActivity"
             android:exported="false" />
         <activity
             android:name=".ui.activity.NuevoClienteActivity"
-            android:exported="false" /> <!-- 🚀 ACTUALIZADO: El Login ahora es el LAUNCHER principal al iniciar la App -->
+            android:exported="false" />
         <activity
             android:name=".ui.activity.LoginActivity"
             android:exported="true">
@@ -28,7 +37,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- La MainActivity queda a la espera de que el Login sea exitoso -->
+        </activity>
         <activity
             android:name=".ui.activity.MainActivity"
             android:exported="false" />

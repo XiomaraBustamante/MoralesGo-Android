@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#EDE8F5"
-    tools:context=".ui.activity.ListarClientesActivity">
+    tools:context=".ui.activity.HistorialVentasActivity">
 
     <LinearLayout
         android:id="@+id/lytTopContainer"
@@ -28,7 +28,7 @@
             android:paddingBottom="12dp">
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/btnAtrasClientesCard"
+                android:id="@+id/btnAtrasHistorialCard"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginEnd="16dp"
@@ -37,7 +37,7 @@
                 app:cardElevation="0dp"
                 android:foreground="?attr/selectableItemBackground">
                 <ImageView
-                    android:id="@+id/btnAtrasClientes"
+                    android:id="@+id/btnAtrasHistorial"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@android:drawable/ic_menu_revert"
@@ -53,7 +53,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Directorio de Clientes"
+                    android:text="Historial de Ventas"
                     android:textColor="#5B4FFF"
                     android:textSize="24sp"
                     android:textStyle="bold"
@@ -61,7 +61,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Base de datos local sincronizada"
                     android:textColor="#9E9AA8"
                     android:textSize="13sp" />
             </LinearLayout>
@@ -90,12 +89,12 @@
                     app:tint="#BDBDBD" />
 
                 <EditText
-                    android:id="@+id/etBuscarCliente"
+                    android:id="@+id/etBuscarVenta"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginHorizontal="32dp"
                     android:background="@null"
-                    android:hint="Buscar por nombre, DNI, RUC o tel..."
+                    android:hint="Buscar por serie, número o cliente..."
                     android:textColorHint="#BDBDBD"
                     android:textColor="#1E1B24"
                     android:textSize="14sp"
@@ -106,7 +105,7 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvClientes"
+        android:id="@+id/rvHistorialVentas"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:paddingHorizontal="14dp"
@@ -114,10 +113,10 @@
         android:clipToPadding="false"
         app:layout_constraintTop_toBottomOf="@id/lytTopContainer"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:listitem="@layout/fila_cliente" />
+        tools:listitem="@layout/item_venta" />
 
     <LinearLayout
-        android:id="@+id/lytEmptyStateClientes"
+        android:id="@+id/lytEmptyStateVentas"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -138,7 +137,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Sin Coincidencias"
+            android:text="Sin Comprobantes"
             android:textColor="#261C53"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -148,24 +147,20 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:gravity="center"
-            android:text="No se encontraron resultados para tu búsqueda."
+            android:text="No se encontraron ventas registradas hoy."
             android:textColor="#8C8896"
             android:textSize="14sp" />
     </LinearLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabNuevoCliente"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="24dp"
-        android:clickable="true"
-        android:focusable="true"
-        app:backgroundTint="#5B4FFF"
-        app:tint="#FFFFFF"
-        app:srcCompat="@android:drawable/ic_input_add"
-        app:fabSize="normal"
-        app:elevation="6dp"
+    <ProgressBar
+        android:id="@+id/progressHistorial"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:indeterminateTint="#5B4FFF"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
