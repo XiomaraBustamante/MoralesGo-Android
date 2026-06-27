@@ -17,7 +17,7 @@ import org.json.JSONObject
 
 class LoginActivity : AppCompatActivity() {
 
-    private val URL_LOGIN = "http://10.0.2.2:8068/api/usuarios/login"
+    private val URL_LOGIN = "https://calzadosmorales-backend-production.up.railway.app/api/usuarios/login"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

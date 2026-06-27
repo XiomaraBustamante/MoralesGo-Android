@@ -31,12 +31,11 @@ class MainActivity : AppCompatActivity() {
     private var listaCompletaProductos = mutableListOf<Producto>()
     private var listaFiltradaBusqueda = mutableListOf<Producto>()
 
-    // Referencia al Chip de "Todos" dinámico
+
     private var chipTodosDinamico: Chip? = null
 
-    // Rutas base de conexión a la API
-    private val URL_API_PRODUCTOS = "http://10.0.2.2:8068/api/productos/listar"
-    private val URL_API_CATEGORIAS = "http://10.0.2.2:8068/api/categorias/listar"
+    private val URL_API_PRODUCTOS = "https://calzadosmorales-backend-production.up.railway.app/api/productos/listar"
+    private val URL_API_CATEGORIAS = "https://calzadosmorales-backend-production.up.railway.app/api/categorias/listar"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

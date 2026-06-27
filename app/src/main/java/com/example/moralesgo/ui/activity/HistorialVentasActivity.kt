@@ -30,7 +30,7 @@ class HistorialVentasActivity : AppCompatActivity() {
     private val listaFiltrada = mutableListOf<VentaHistorial>()
 
 
-    private val URL_LISTAR_VENTAS = "http://10.0.2.2:8068/api/ventas/listar"
+    private val URL_LISTAR_VENTAS = "https://calzadosmorales-backend-production.up.railway.app/api/ventas/listar"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -101,7 +101,7 @@ class HistorialVentasActivity : AppCompatActivity() {
                     binding.progressHistorial.visibility = View.GONE
                     Toast.makeText(
                         this@HistorialVentasActivity,
-                        "Error al conectar con el servidor local",
+                        "Error al conectar con el servidor central",
                         Toast.LENGTH_LONG
                     ).show()
                 }

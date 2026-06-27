@@ -1,7 +1,7 @@
 package com.example.moralesgo.ui.activity
 
 import android.app.AlertDialog
-import android.content.Intent // 🌟 IMPORTANTE: Añadida la importación para navegación
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
@@ -327,7 +327,7 @@ class DetalleProductoActivity : AppCompatActivity() {
 
     private fun ejecutarSincronizacionFreshStock() {
         val idProd = productoSeleccionado?.id_producto ?: return
-        val urlApiFresh = "http://10.0.2.2:8068/api/productos/api-detalle/$idProd"
+        val urlApiFresh = "https://calzadosmorales-backend-production.up.railway.app/api/productos/api-detalle/$idProd"
 
         Log.d("MORALESGO", "Sincronizando producto completo desde la API: $urlApiFresh")
 

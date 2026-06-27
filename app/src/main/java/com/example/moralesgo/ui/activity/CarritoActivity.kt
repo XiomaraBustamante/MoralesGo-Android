@@ -37,7 +37,7 @@ class CarritoActivity : AppCompatActivity() {
     private var idClienteSeleccionado: Int? = null
     private var textClienteNombre: String? = null
 
-    private val URL_GUARDAR_VENTA = "http://10.0.2.2:8068/api/ventas/guardar"
+    private val URL_GUARDAR_VENTA = "https://calzadosmorales-backend-production.up.railway.app/api/ventas/guardar"
 
     private val iniciarSeleccionClienteLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
